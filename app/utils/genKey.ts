@@ -24,7 +24,7 @@ export default function (
     day: format(now, "dd"),
     filename: file.name.split(".").shift() || "",
     ext: type === "none" ? file.name.split(".").pop() || "" : type,
-    random: `${msFromStartOfDay.toString(36)}-${Math.random()
+    random: `${msFromStartOfDay.toString(36)}${Math.random()
       .toString(36)
       .substring(2, 4)}`,
   };
