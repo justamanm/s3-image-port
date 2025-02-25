@@ -1,5 +1,57 @@
 # S3 Image Port
 
+
+
+1.build镜像
+
+```bash
+docker build --rm -t s3_image_port --network=host .
+```
+
+
+
+2.启动容器
+
+```bash
+docker run -itd --name s3_image_port  --network="mybridge" s3_image_port:latest
+```
+
+
+
+3.nginx配置
+
+- 虽然只是一个界面，配置是在本地浏览器的，依然加上了api_gateway
+- 使用python http.server跑在3000端口上
+
+```nginx
+server {
+        listen      443 ssl;
+        server_name domain.com;  # 替换为你的域名或 IP
+
+        include ssl.conf;
+
+        location / {
+            auth_request /auth_backend;
+
+            proxy_pass http://s3_image_port:3000;
+        }
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+---
+# 原文档
+
 [English](/README.md) · [简体中文](/docs/README-zh.md)
 
 这是一个定制的前端面板，用于管理托管在**类 S3**存储服务（如 Cloudflare R2）上的图片。传统上这些存储服务没有专门的图片管理面板，该解决方案为图片的**上传**、**管理**和**集成**提供了一个简单而强大的界面。
